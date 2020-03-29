@@ -28,7 +28,7 @@ router.post('/create', function(req, res, next) {
   pandas
       .insertOne(
           {
-            _id: body.pandaId, weapon: "N/A", points:"1000", lat: body.lat , lng: body.lng, lastSeen: body.lastSeen
+            _id: body.pandaId, weapon: "N/A", points:"1000", lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
           });
   res.status(200).send()
 });

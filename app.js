@@ -12,7 +12,7 @@ var pandasRouter = require('./routes/panda');
 var twilioRouter = require('./routes/twilio');
 
 // Use Environment-defined port or 3000
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 
 // Connect to the PandaGO MongoDB
 // const MongoClient = require('mongodb').MongoClient;
