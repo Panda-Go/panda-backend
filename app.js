@@ -15,7 +15,6 @@ var port = process.env.PORT || 3000;
 // Connect to the PandaGO MongoDB
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://pandago:pandago@cluster0-oemw8.mongodb.net/test?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
   if (err) throw err;
   var dbo = db.db("PandaGoDB");
