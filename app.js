@@ -21,11 +21,12 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
   var dbo = db.db("PandaGoDB");
 
     // Sample Test Query to DB
-    dbo.collection("users").find({}).toArray( (err, result) => {
+    dbo.collection("pandas").find({}).toArray( (err, result) => {
         if (err) throw err;
         console.log(result);
         db.close();
     });
+    
 
 });
 
