@@ -24,7 +24,7 @@ router.post('/create', function(req, res, next) {
   pandas
       .insertOne(
           {
-            _id: body.pandaId, weapon: "N/A", points:"5000", lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
+            _id: body.pandaId, weapon: "N/A", points:1000, lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
           });
   res.status(200).send()
 });
@@ -106,7 +106,7 @@ router.put('/fight', (req, res, next) => {
     let winnerPandaId = req.body.winner;
     let loserPandaId = req.body.loser;
     pandas.findOne({_id: winnerPandaId}, (err, data) => {
-        pandas.updateOne({_id: winnerPandaId}, {'$set': {'points': (500 + parseInt(data.points))}}, (err, item) => {
+        pandas.updateOne({_id: winnerPandaId}, {'$set': {'points': 500 + parseInt(data.points)}}, (err, item) => {
         });
     });
 
