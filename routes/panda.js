@@ -21,12 +21,19 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
 /* Create new panda. */
 router.post('/create', function(req, res, next) {
   const body = req.body;
-  pandas
+  pandas.delete()
       .insertOne(
           {
             _id: body.pandaId, weapon: "N/A", points:1000, lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
           });
   res.status(200).send()
+});
+
+/* WARNING DANGEROUS API */
+router.delet('/remove', function(req, res, next) {
+    const body = req.body;
+    pandas.remove()
+    res.status(200).send()
 });
 
 /* Get a  new panda. */
