@@ -8,7 +8,7 @@ var config = require('./routes/config');
 // var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var pandasRouter = require('./routes/panda');
 var twilioRouter = require('./routes/twilio');
 
 // Use Environment-defined port or 3000
@@ -44,7 +44,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/panda', pandasRouter);
 app.use('/twilio', twilioRouter);
 
 // catch 404 and forward to error handler
