@@ -30,7 +30,7 @@ router.post('/create', function(req, res, next) {
 });
 
 /* WARNING DANGEROUS API */
-router.delet('/remove', function(req, res, next) {
+router.delete('/remove', function(req, res, next) {
     const body = req.body;
     pandas.remove()
     res.status(200).send()
