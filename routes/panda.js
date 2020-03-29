@@ -21,7 +21,7 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
 /* Create new panda. */
 router.post('/create', function(req, res, next) {
   const body = req.body;
-  pandas.delete()
+  pandas
       .insertOne(
           {
             _id: body.pandaId, weapon: "N/A", points:1000, lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
@@ -32,7 +32,7 @@ router.post('/create', function(req, res, next) {
 /* WARNING DANGEROUS API */
 router.delete('/remove', function(req, res, next) {
     const body = req.body;
-    pandas.remove()
+    pandas.remove();
     res.status(200).send()
 });
 
