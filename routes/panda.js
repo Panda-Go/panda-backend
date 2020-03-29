@@ -59,7 +59,7 @@ router.put('/update/weapon', function(req, res, next) {
 
 /* Update panda points. */
 router.put('/update/points', function(req, res, next) {
-  pandas.updateOne({_id: req.body.pandaId}, {'$set': {'points': req.body.points}}, (err, item) => {
+  pandas.updateOne({_id: req.body.pandaId}, {'$set': {'points': parseInt(req.body.points)}}, (err, item) => {
     res.sendStatus(200)
   });
 });
