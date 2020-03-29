@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 
     var userListing = {};
 
-    dbo.collection("users").find({}).toArray( (err, result) => {
+    dbo.collection("pandas").find({}).toArray( (err, result) => {
         if (err) throw err;
 
         userListing = result;
