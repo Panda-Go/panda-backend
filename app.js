@@ -17,8 +17,8 @@ var port = process.env.PORT || 3000;
 // Connect to the PandaGO MongoDB
 const MongoClient = require('mongodb').MongoClient;
 MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-  if (err) throw err;
-  var dbo = db.db("PandaGoDB");
+    if (err) throw err;
+    var dbo = db.db("PandaGoDB");
 
     // Sample Test Query to DB
     dbo.collection("pandas").find({}).toArray( (err, result) => {
@@ -27,7 +27,6 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
         db.close();
     });
     
-
 });
 
 
