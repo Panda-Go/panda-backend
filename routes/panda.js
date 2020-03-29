@@ -3,6 +3,7 @@ var router = express.Router();
 var config = require('./config');
 var dbo;
 var pandas;
+var weapons;
 
 const POINTS_LOST_LEAVE_SAFE_AREA = 20;
 
@@ -13,12 +14,7 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
   if (err) throw err;
   dbo = db.db("PandaGoDB");
   pandas = dbo.collection("pandas");
-});
-
-MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-    if (err) throw err;
-    dbo = db.db("PandaGoDB");
-    weapons = dbo.collection("weapons");
+  weapons = dbo.collection("weapons");
 });
 
 
@@ -28,7 +24,7 @@ router.post('/create', function(req, res, next) {
   pandas
       .insertOne(
           {
-            _id: body.pandaId, weapon: "N/A", points:"1000", lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
+            _id: body.pandaId, weapon: "N/A", points:"5000", lat: body.lat , lng: body.lng, lastSeen: body.lastSeen, name: body.name
           });
   res.status(200).send()
 });
@@ -70,28 +66,29 @@ router.put('/update/lastSeen', function(req, res, next) {
 
 /* Get weapon cost*/
 router.get('/getcost', (req, res, next) => {
-    weapons.findOne({name: req.body.name}, (err, item) => {
+    weapons.findOne({name: req.query.name}, (err, item) => {
         console.log(`Cost of weapon: ${item.cost}`);
         res.send(item)
     });
 });
 
+/* Get all weapon*/
+router.get('/weapons', (req, res, next) => {
+    weapons.find({}).toArray( (err, result) => {
+        if (err) throw err;
+        res.status(200).send(result);
+    });
+});
+
 /* Panda purchases weapon. */
 router.put('/purchase', (req, res, next) => {
-    weapons.findOne({ name: req.body.name }, (err, item) => {  
-        console.log("PRINT SOME GARBAGE HERE");
-        console.log(`Cost of weapon: ${item.cost}`);
-        console.log(`Weapon name: ${item.name}`);
-        // console.log(`Weapon points: ${item.cost}`);
-        // var updatedPoints = req.body.points - item.cost;
-        // console.log(`Updated points: ${updatedPoints}`);
-        // if (updatedPoints < 0) {
-        //     return res.sendStatus(200).send(`Not enough points to purchase ${weapon}`);
-        // }
-        // pandas.updateOne({_id: req.body.pandaId}, {'$set': {'weapon': req.body.weapon, 'points': updatedPoints}}, (err, item) => {
-        //     res.sendStatus(200)
-        // });
-        res.send(item)
+    weapons.findOne({name: req.body.name}, (err, item) => {
+        let weaponPoints = item.cost
+        pandas.findOne({_id: req.body.pandaId}, (err, data) => {
+            pandas.updateOne({_id: req.body.pandaId}, {'$set': {'points': (data.points - weaponPoints), 'weapon':req.body.name}}, (err, item) => {
+                res.sendStatus(200)
+            });
+        });
     });
 });
 
@@ -100,6 +97,23 @@ router.get('/get_all_pandas', (req, res, next) => {
     pandas.find({}).toArray( (err, result) => {
         if (err) throw err;
         res.status(200).send(result);
+    });
+});
+
+
+/* Let the Pandas fight */
+router.put('/fight', (req, res, next) => {
+    let winnerPandaId = req.body.winner;
+    let loserPandaId = req.body.loser;
+    pandas.findOne({_id: winnerPandaId}, (err, data) => {
+        pandas.updateOne({_id: winnerPandaId}, {'$set': {'points': (500 + parseInt(data.points))}}, (err, item) => {
+        });
+    });
+
+    pandas.findOne({_id: loserPandaId}, (err, data) => {
+        pandas.updateOne({_id: loserPandaId}, {'$set': {'points': (data.points - 250), 'weapon':'N/A'}}, (err, item) => {
+            res.sendStatus(200)
+        });
     });
 });
 

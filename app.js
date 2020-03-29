@@ -3,31 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongo = require('mongodb');
-var config = require('./routes/config');
-// var mongoose = require('mongoose');
+
 
 var indexRouter = require('./routes/index');
 var pandasRouter = require('./routes/panda');
 var twilioRouter = require('./routes/twilio');
 
 // Use Environment-defined port or 3000
-var port = process.env.PORT || 3001;
-
-// Connect to the PandaGO MongoDB
-// const MongoClient = require('mongodb').MongoClient;
-// MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-//   if (err) throw err;
-//   var dbo = db.db("PandaGoDB");
-//
-//     // Sample Test Query to DB
-//     dbo.collection("users").find({}).toArray( (err, result) => {
-//         if (err) throw err;
-//         console.log(result);
-//         db.close();
-//     });
-//
-// });
+var port = process.env.PORT || 3002;
 
 
 var app = express();
