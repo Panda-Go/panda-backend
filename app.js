@@ -3,9 +3,32 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongo = require('mongodb');
+// var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+// Use Environment-defined port or 3000
+var port = process.env.PORT || 3000;
+
+// Connect to the PandaGO MongoDB
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://pandago:pandago@cluster0-oemw8.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+  if (err) throw err;
+  var dbo = db.db("PandaGoDB");
+
+    // Sample Test Query to DB
+    dbo.collection("users").find({}).toArray( (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        db.close();
+    });
+
+});
+
 
 var app = express();
 
@@ -37,5 +60,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Start the server
+app.listen(port);
 
 module.exports = app;
