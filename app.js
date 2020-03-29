@@ -15,19 +15,19 @@ var twilioRouter = require('./routes/twilio');
 var port = process.env.PORT || 3000;
 
 // Connect to the PandaGO MongoDB
-const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-    if (err) throw err;
-    var dbo = db.db("PandaGoDB");
-
-    // // Sample Test Query to DB
-    // dbo.collection("pandas").find({}).toArray( (err, result) => {
-    //     if (err) throw err;
-    //     console.log(result);
-    //     db.close();
-    // });
-    
-});
+// const MongoClient = require('mongodb').MongoClient;
+// MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+//   if (err) throw err;
+//   var dbo = db.db("PandaGoDB");
+//
+//     // Sample Test Query to DB
+//     dbo.collection("users").find({}).toArray( (err, result) => {
+//         if (err) throw err;
+//         console.log(result);
+//         db.close();
+//     });
+//
+// });
 
 
 var app = express();
