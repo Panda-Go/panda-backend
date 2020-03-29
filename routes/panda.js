@@ -1,25 +1,34 @@
 var express = require('express');
 var router = express.Router();
+var config = require('./config');
+var dbo;
+var pandas;
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
+// Connect to the PandaGO MongoDB
+const MongoClient = require('mongodb').MongoClient;
 
-    var userListing = {};
-
-    dbo.collection("pandas").find({}).toArray( (err, result) => {
-        if (err) throw err;
-
-        userListing = result;
-        console.log(result);
-        
-        db.close();
-
-    });
-
-    // res.send('respond with a resource');
-    res.send(result);
+MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+  if (err) throw err;
+  dbo = db.db("PandaGoDB");
+  pandas = dbo.collection("pandas");
 });
 
-router.get('/')
+
+/* Create new panda. */
+router.post('/create', function(req, res, next) {
+  // Sample Test Query to DB
+  const body = req.body;
+  pandas
+      .insertOne(
+          {
+            _id: body.phoneNumber, weapon: "N/A", points:"1000", lat: body.lat , lng: body.lng
+          });
+  res.status(200).send()
+});
+
+
+
+
+router.get('/');
 
 module.exports = router;

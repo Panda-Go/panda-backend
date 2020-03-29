@@ -20,12 +20,12 @@ MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: t
     if (err) throw err;
     var dbo = db.db("PandaGoDB");
 
-    // Sample Test Query to DB
-    dbo.collection("pandas").find({}).toArray( (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        db.close();
-    });
+    // // Sample Test Query to DB
+    // dbo.collection("pandas").find({}).toArray( (err, result) => {
+    //     if (err) throw err;
+    //     console.log(result);
+    //     db.close();
+    // });
     
 });
 
