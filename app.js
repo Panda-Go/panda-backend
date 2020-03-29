@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongo = require('mongodb');
+var config = require('./routes/config');
 // var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
@@ -15,8 +16,7 @@ var port = process.env.PORT || 3000;
 
 // Connect to the PandaGO MongoDB
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://pandago:pandago@cluster0-oemw8.mongodb.net/test?retryWrites=true&w=majority";
-MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+MongoClient.connect(config.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
   if (err) throw err;
   var dbo = db.db("PandaGoDB");
 
